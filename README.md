@@ -23,7 +23,7 @@ Ce projet consiste à concevoir et développer de A à Z une plateforme web vitr
 
 * Back-end : PHP 8 / Symfony
 * Bases de données : MySQL / Doctrine ORM
-* Front-end :Twig / JavaScript (Interactions & intégration) / CSS
+* Front-end :Twig / JavaScript (Interactions & intégration) / CSS / Tailwind
 * Sécurité : Symfony Security (Hachage des mots de passe, Authentification, Contrôle d'accès par rôles)
 
 ---
