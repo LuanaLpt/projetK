@@ -1,0 +1,7 @@
+{% block form_errors %}
+    {% for error in errors %}
+        <p class="text-red-600 text-sm font-sans mt-0.5">
+            {{ error.message }}
+        </p>
+    {% endfor %}
+{% endblock form_errors %}

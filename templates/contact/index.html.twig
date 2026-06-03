@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex items-center justify-center py-12">
+        <div class="flex flex-col w-1/2">
+            <div class="text-3xl pb-4 font-Barlow">CONTACT</div>
+
+            {% for message in app.flashes('success') %}
+                <div class=" border border-black  px-4 py-3 rounded my-4 font-Barlow text-xl text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
+            <div class="border-2 border-black p-8 rounded">
+                {{ form_start(contactForm, {attr: {novalidate: 'novalidate'}}) }}
+                <div class="flex flex-col gap-8 w-full max-w-xl mx-auto pt-10 font-Barlow text-2xl">
+
+
+                    <div class="flex justify-between items-center gap-4 w-full">
+                        <div class="w-1/2">
+                            {{ form_widget(contactForm.name, {'attr': {'class': 'border border-gray-300 p-3 rounded w-full'}}) }}
+                            {{ form_errors(contactForm.name) }}
+                        </div>
+                        <div class="w-1/2">
+                            {{ form_widget(contactForm.lastName, {'attr': {'class': 'border border-gray-300 p-3 rounded w-full'}}) }}
+                            {{ form_errors(contactForm.lastName) }}
+                        </div>
+                    </div>
+
+
+                    <div class="w-full">
+                        {{ form_widget(contactForm.mail, {'attr': {'class': 'border border-gray-300 p-3 rounded w-full'}}) }}
+                        {{ form_errors(contactForm.mail) }}
+                    </div>
+
+
+                    <div class="w-full">
+                        {{ form_widget(contactForm.subject, {'attr': {'class': 'border border-gray-300 p-3 rounded w-full'}}) }}
+                        {{ form_errors(contactForm.subject) }}
+                    </div>
+
+
+                    <div class="w-full">
+                        {{ form_widget(contactForm.message, {'attr': {'class': 'border border-gray-300 p-3 rounded w-full resize-none', 'rows': '4'}}) }}
+                        {{ form_errors(contactForm.message) }}
+                    </div>
+                    {{ form_errors(contactForm) }}
+                    <button type="submit" class="cursor-pointer text-3xl pb-6 text-left hover:text-gray-600 transition-colors">
+                        Envoyer
+                    </button>
+                </div>
+                {{ form_end(contactForm) }}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
