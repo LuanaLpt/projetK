@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <div id="containerModal" class="hidden fixed flex inset-0 z-50  items-center justify-center bg-black/80 cursor-zoom-out">
+        <img id="modalImage" src="" alt="Zoom" class="max-w-[90vw] max-h-[90vh] rounded shadow-2xl object-contain transition-transform duration-300">
+    </div>
     <div class="flex items-center justify-center py-12">
         <div class="flex flex-col w-1/2">
             <div class="text-3xl pb-4 font-Barlow">Ajouter un nouveau produit ou projet</div>
@@ -9,32 +12,34 @@
                 </div>
             {% endfor %}
             <div class="border-2 border-black p-8 rounded">
-                {{ form_start(artForm) }}
+                {{ form_start(artForm, {attr: {novalidate: 'novalidate'}}) }}
                 <div class="flex font-Barlow text-2xl gap-8">
 
 
                     <div class="flex flex-col gap-8 w-3/5">
                         <div>
-
                             {{ form_widget(artForm.title, {'attr': {'class': 'border border-gray-300 p-3 rounded w-full'}}) }}
                             {{ form_errors(artForm.title) }}
                         </div>
 
                         <div class="flex flex-col w-full">
                             <div>Choisir la/les image(s) principale(s)</div>
-                            <label class="flex cursor-pointer" >
-                                <div class="font-sans text-3xl">+</div>
-                                {{ form_widget(artForm.mainImages, {'attr': {'class': 'hidden'}}) }}
+                            <div class="flex flex-row flex-wrap gap-6 image-preview-container" >
+                            <label class="flex cursor-pointer items-center justify-center w-10 h-10 add-images-label" >
+                                <div  class="font-sans text-3xl leading-none">+</div>
+                                {{ form_widget(artForm.mainImages, {'attr': {'class': 'hidden', 'multiple': 'multiple'}}) }}
                             </label>
+                            </div>
                             {{ form_errors(artForm.mainImages) }}
                         </div>
-
                         <div class="flex flex-col w-full">
                             <div>Choisir les images de transitions</div>
-                            <label class="flex cursor-pointer" >
-                                <div class="font-sans text-3xl">+</div>
-                                {{ form_widget(artForm.transiImages, {'attr': {'class': 'hidden'}}) }}
+                            <div class="flex flex-row flex-wrap gap-6 image-preview-container">
+                                <label class="flex cursor-pointer items-center justify-center  w-10 h-10 add-images-label" >
+                                <div class="font-sans text-3xl leading-none">+</div>
+                                {{ form_widget(artForm.transiImages, {'attr': {'class': 'hidden', 'multiple': 'multiple'}}) }}
                             </label>
+                            </div>
                             {{ form_errors(artForm.transiImages) }}
                         </div>
                         <div>

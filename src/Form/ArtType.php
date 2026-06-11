@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\File;
 
 class ArtType extends AbstractType
 {
@@ -43,12 +45,31 @@ class ArtType extends AbstractType
                 'mapped' => false,
                 'multiple' => true,
                 'required' => false,
+                'constraints' => [
+                    new All([
+                        new File([
+                            'maxSize' => '10M',
+                            'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                            'maxSizeMessage' => 'L\'image est trop lourde ({{ size }} {{ suffix }}). Le maximum autorisé est {{ limit }} {{ suffix }}.',
+                        ])
+                    ])
+                ]
+
             ])
             ->add('transiImages', FileType::class, [
                 'label' => 'Ajouter photos de transi',
                 'mapped' => false,
                 'multiple' => true,
                 'required' => false,
+                'constraints' => [
+                    new All([
+                        new File([
+                            'maxSize' => '10M',
+                            'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                            'maxSizeMessage' => 'L\'image est trop lourde ({{ size }} {{ suffix }}). Le maximum autorisé est {{ limit }} {{ suffix }}.',
+                        ])
+                    ])
+                ]
             ])
         ;
     }

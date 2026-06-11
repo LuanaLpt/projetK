@@ -48,4 +48,8 @@ class TransiImage
 
         return $this;
     }
+
+    public function setArt(Art $art)
+    {
+    }
 }

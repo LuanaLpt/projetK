@@ -29,25 +29,27 @@ final class AdminController extends AbstractController
             $mainImages = $form->get('mainImages')->getData();
             $transiImages = $form->get('transiImages')->getData();
             if($mainImages){
-                foreach ($mainImages as $mainImage) {
-                    $newFileName = uniqid() . '.' . $mainImage->guessExtension();
-                    $mainImage->move($this->getParameter('art_directory'), $newFileName);
+                foreach ($mainImages as $mainImageFile) {
+                    $newFileName = uniqid() . '.' . $mainImageFile->guessExtension();
+                    $mainImageFile->move($this->getParameter('images_directory'), $newFileName);
 
-                    $mainImage = new \App\Entity\MainImage();
-                    $mainImage->setFilename($newFileName);
-                    $art->addMainImage($mainImage);
-                    $entityManager->persist($mainImage);
+                    $mainImageEntity = new \App\Entity\MainImage();
+                    $mainImageEntity->setFilename($newFileName);
+                    $mainImageEntity->setArt($art);
+                    $art->addMainImage($mainImageEntity);
+                    $entityManager->persist($mainImageEntity);
                 }
             }
             if($transiImages){
-                foreach ($transiImages as $transiImage) {
-                    $newFileName = uniqid() . '.' . $transiImage->guessExtension();
-                    $transiImage->move($this->getParameter('art_directory'), $newFileName);
+                foreach ($transiImages as $transiImageFile) {
+                    $newFileName = uniqid() . '.' . $transiImageFile->guessExtension();
+                    $transiImageFile->move($this->getParameter('images_directory'), $newFileName);
 
-                    $transiImage = new \App\Entity\TransiImage();
-                    $transiImage->setFilename($newFileName);
-                    $art->addTransiImage($transiImage);
-                    $entityManager->persist($transiImage);
+                    $transiImageEntity = new \App\Entity\TransiImage();
+                    $transiImageEntity->setFilename($newFileName);
+                    $transiImageEntity->setArt($art);
+                    $art->addTransiImage($transiImageEntity);
+                    $entityManager->persist($transiImageEntity);
                 }
             }
 

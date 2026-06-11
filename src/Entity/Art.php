@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: ArtRepository::class)]
+#[Assert\Callback('validatePrice')]
 class Art
 {
     #[ORM\Id]
@@ -17,9 +20,11 @@ class Art
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Veuillez inscrire le nom du projet ou produit")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\NotBlank(message:"Veuillez décrire votre projet ou produit")]
     private ?string $description = null;
 
     #[ORM\Column(length: 20)]
@@ -40,10 +45,17 @@ class Art
     #[ORM\OneToMany(targetEntity: TransiImage::class, mappedBy: 'item', orphanRemoval: true)]
     private Collection $transiImages;
 
+    /**
+     * @var Collection<int, mainImage>
+     */
+    #[ORM\OneToMany(targetEntity: mainImage::class, mappedBy: 'art')]
+    private Collection $mainImages;
+
     public function __construct()
     {
         $this->mainImage = new ArrayCollection();
         $this->transiImages = new ArrayCollection();
+        $this->mainImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,12 +162,29 @@ class Art
     public function removeTransiImage(TransiImage $transiImage): static
     {
         if ($this->transiImages->removeElement($transiImage)) {
-            // set the owning side to null (unless already changed)
             if ($transiImage->getItem() === $this) {
                 $transiImage->setItem(null);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, mainImage>
+     */
+    public function getMainImages(): Collection
+    {
+        return $this->mainImages;
+    }
+
+    #[Assert\Callback]
+    public function validatePrice(ExecutionContextInterface $context): void
+    {
+        if ($this->getType() === 'Produit' && $this->getPrice() === null) {
+            $context->buildViolation('Le prix est obligatoire lorsque vous créez un produit.')
+                ->atPath('price')
+                ->addViolation();
+        }
     }
 }

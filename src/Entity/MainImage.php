@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MainImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MainImageRepository::class)]
 class MainImage
@@ -19,6 +20,10 @@ class MainImage
     #[ORM\ManyToOne(inversedBy: 'mainImage')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Art $item = null;
+
+    #[ORM\ManyToOne(inversedBy: 'mainImages')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Art $art = null;
 
     public function getId(): ?int
     {
@@ -45,6 +50,18 @@ class MainImage
     public function setItem(?Art $item): static
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function getArt(): ?Art
+    {
+        return $this->art;
+    }
+
+    public function setArt(?Art $art): static
+    {
+        $this->art = $art;
 
         return $this;
     }

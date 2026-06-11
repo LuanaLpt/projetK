@@ -6,7 +6,15 @@
         <div>Shop</div>
         <div>{{ source('svg/cart-svgrepo-com.svg')}}</div>
         <div> <a href="{{ path('app_contact') }}">Contact</a></div>
-        <div>Connexion</div>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div><a href="{{ path('app_admin') }}">Dashboard</a></div>
+        {% endif %}
+        {% if app.user %}
+        <div><a href="{{ path('app_logout') }}">Déconnexion</a></div>
+        {% else %}
+        <div><a href="{{ path('app_login') }}"> Connexion</a></div>
+    {% endif %}
         <div>{{ source('svg/earth-svgrepo-com.svg')}}</div>
     </div>
 </div>
