@@ -1,36 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="flex items-center justify-center py-12">
+        <div class="flex flex-col w-1/2">
+            <div class="text-3xl pb-4 font-Barlow">CONNEXION</div>
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
+
+            {% if error %}
+                <div class="border border-red-500 bg-red-50 text-red-700 px-4 py-3 rounded my-4 font-Barlow text-xl text-center">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <div class="border-2 border-black p-8 rounded">
+                <form method="post">
+                    <div class="flex flex-col gap-8 w-full max-w-xl mx-auto pt-10 font-Barlow text-2xl">
+
+
+                        <div class="w-full">
+                            <label for="username"></label>
+                            <input
+                                type="email"
+                                value="{{ last_username }}"
+                                name="_username"
+                                id="username"
+                                class="border border-gray-300 p-3 rounded w-full"
+                                placeholder="Mail@exemple.com"
+                                autocomplete="email"
+                                required
+                                autofocus
+                            >
+                        </div>
+
+
+                        <div class="w-full">
+                            <label for="password"></label>
+                            <input
+                                type="password"
+                                name="_password"
+                                id="password"
+                                class="border border-gray-300 p-3 rounded w-full"
+                                placeholder="Mot de passe"
+                                autocomplete="current-password"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="flex items-center gap-4 text-xl pl-1">
+
+                            <input
+                                type="checkbox"
+                                name="_remember_me"
+                                id="_remember_me"
+                                class="w-5 h-5 accent-black cursor-pointer"
+                            >
+                            <label for="_remember_me" class="cursor-pointer select-none">Se souvenir de moi</label>
+                        </div>
+
+
+                        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+
+                        <button type="submit" class="cursor-pointer text-3xl pb-6 text-left hover:text-gray-600 transition-colors mt-4">
+                            Se connecter
+                        </button>
+
+                    </div>
+                </form>
             </div>
-        {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-
-
-
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Se souvenir de moi</label>
-            </div>
-
-
-        <button class="btn btn-lg btn-primary" type="submit">
-           Se connecter
-        </button>
-    </form>
+        </div>
+    </div>
 {% endblock %}
