@@ -36,19 +36,19 @@ class Art
     /**
      * @var Collection<int, MainImage>
      */
-    #[ORM\OneToMany(targetEntity: MainImage::class, mappedBy: 'item', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: MainImage::class, mappedBy: 'item', cascade: ['remove'], orphanRemoval: true)]
     private Collection $mainImage;
 
     /**
      * @var Collection<int, TransiImage>
      */
-    #[ORM\OneToMany(targetEntity: TransiImage::class, mappedBy: 'item', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TransiImage::class, mappedBy: 'item', cascade: ['remove'], orphanRemoval: true)]
     private Collection $transiImages;
 
     /**
      * @var Collection<int, mainImage>
      */
-    #[ORM\OneToMany(targetEntity: mainImage::class, mappedBy: 'art')]
+    #[ORM\OneToMany(targetEntity: MainImage::class, mappedBy: 'item', cascade: ['remove'], orphanRemoval: true)]
     private Collection $mainImages;
 
     public function __construct()

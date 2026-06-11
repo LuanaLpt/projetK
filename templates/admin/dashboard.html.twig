@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+    <div class="flex justify-evenly items-start gap-10 px-10 pt-10">
+        <div class="flex flex-col w-full max-w-md">
+        <div class="font-Beba text-3xl mb-4 tracking-wider">Projets
+        <div class="border-2 border-black rounded-lg p-6 flex flex-col gap-6 h-150 overflow-y-auto">
+            {% for projet in projets %}
+            <div class="border text-xl border-gray-400 p-4 rounded flex flex-row gap-4 items-center bg-white shadow-sm">
+                <div class="w-20 h-20 border border-black rounded overflow-hidden shrink-0">
+                    <img src="{{ asset('uploads/images/' ~ projet.mainImages.first.filename) }}" class="w-full h-full object-cover" alt="Projet">
+                </div>
+            <div>{{ projet.title }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+        </div>
+        <div class="flex flex-col w-full max-w-md">
+        <div class="font-Beba text-3xl mb-4 tracking-wider">Produits
+        <div class="border-2 border-black rounded-lg p-6 flex flex-col gap-6 h-150 overflow-y-auto">
+            {% for produit in produits %}
+
+                <div class="border text-xl border-gray-400 p-4 rounded flex flex-row items-start bg-white shadow-sm gap-6">
+                    <div class="flex flex-col items-center justify-center shrink-0 w-28 text-center">
+                        <div class="text-sm mb-1  w-full">{{ produit.title }}</div>
+                    <div class="w-20 h-20 border border-black rounded overflow-hidden">
+                        <img src="{{ asset('uploads/images/' ~ produit.mainImages.first.filename) }}" class="w-full h-full object-cover" alt="Produit">
+                    </div>
+                        <div class="flex gap-4 pt-2">
+                            <a href="{{ path('app_admin_edit', {'id': produit.id}) }}" class="hover:opacity-60 transition-opacity">
+                                {{ source('svg/edit-2-svgrepo-com.svg') }}
+                            </a>
+                            <a href="#" class="hover:opacity-60 transition-opacity">
+                                {{ source('svg/bin-svgrepo-com.svg') }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-sm font-Barlow text-gray-700 leading-snug mt-8 line-clamp-4 grow">{{ produit.description }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+
